@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import clienteAxios from "../config/ClienteAxios";
 import UserContent from "../components/user/UserContent";
+import { Drawer } from "antd";
+import RegisterForm from "../components/auth/RegisterForm";
 
-const User = () => {
+const User: React.FC = () => {
   //State
   const [stateUser, setUserState] = useState([] as any);
   const [dataSource, setDataSource] = useState([] as any);
@@ -77,6 +78,15 @@ const User = () => {
       setStateRecord(record);
     },
   });
+
+  const onCancel = async () => {
+    await getUser();
+    setStateOpenModal({
+      vidible: false,
+      title: "",
+    });
+  };
+
   useEffect(() => {
     getUser();
   }, []);
@@ -90,14 +100,26 @@ const User = () => {
   }, [stateInput]);
 
   return (
-    <UserContent
-      onRow={onRow}
-      setStateInput={setStateInput}
-      dataSource={dataSource}
-      setStateOpenModal={setStateOpenModal}
-      stateRecord={stateRecord}
-      menuContext={menuContext}
-    />
+    <>
+      <UserContent
+        onRow={onRow}
+        setStateInput={setStateInput}
+        dataSource={dataSource}
+        setStateOpenModal={setStateOpenModal}
+        stateRecord={stateRecord}
+        menuContext={menuContext}
+      />
+
+      <Drawer
+        open={stateOpenModal.vidible}
+        width={1200}
+        title={`Editar al usuario con el nickname ${stateRecord.nickName}`}
+        onClose={onCancel}
+        destroyOnClose={true}
+      >
+        <RegisterForm record={stateRecord} cancel={onCancel} />
+      </Drawer>
+    </>
   );
 };
 

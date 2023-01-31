@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { authToken, authIdiom, authUser, authRol } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 
-const AuthForm = () => {
+const AuthForm = ({ openDrawer }) => {
   const navigate = useNavigate();
 
   const onSubmitFormLogin = async (value) => {
@@ -15,7 +15,7 @@ const AuthForm = () => {
       authToken(res.data.token);
       authIdiom(res.data.idiom);
       authUser(res.data.user);
-      authRol(res.data.rol)
+      authRol(res.data.rol);
 
       Swal.fire({
         title: "Bienvenido",
@@ -80,6 +80,19 @@ const AuthForm = () => {
               Ingresar
             </Button>
           </Form.Item>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col span={12}>
+          <Button type="link" style={{ width: "95%" }} onClick={openDrawer} >
+            Registrate{" "}
+          </Button>
+        </Col>
+        <Col span={12}>
+          <Button type="link" style={{ width: "95%" }}>
+            Comunicate con nosotros{" "}
+          </Button>
         </Col>
       </Row>
     </Form>

@@ -8,6 +8,8 @@ import Products from "../views/Products";
 import DetailsProducts from "../views/DetailsProducts";
 import User from "../views/User";
 import Auth from "../views/Auth";
+import { PrivateApp } from "./PrivateApp";
+import NotFound from "../views/NotFound";
 
 import NotAuthorized from "../views/NotAuthorized";
 import { getAuthRol } from "../utils/auth";
@@ -16,51 +18,97 @@ const Index = () => {
   return (
     <Routes>
       <Route path="/" element={<Auth />}></Route>
-      <Route path="/home" element={<HomePrivate />}></Route>
-      <Route path="/product/:id" element={<ProductsClient />}></Route>
-      <Route path="/shopping/cart" element={<ShopingCart />}></Route>
-      <Route
-        path="/categorie"
-        element={
-          getAuthRol() === "cliente" || getAuthRol() === "bodega" ? (
-            <NotAuthorized />
-          ) : (
-            <Categorie />
-          )
-        }
-      ></Route>
-      <Route
-        path="/products"
-        element={
-          getAuthRol() === "cliente" || getAuthRol() === "bodega" ? (
-            <NotAuthorized />
-          ) : (
-            <Products />
-          )
-        }
-      ></Route>
-      <Route
-        path="/details"
-        element={
-          getAuthRol() === "cliente" || getAuthRol() === "venta" ? (
-            <NotAuthorized />
-          ) : (
-            <DetailsProducts />
-          )
-        }
-      ></Route>
-      <Route
-        path="/user"
-        element={
-          getAuthRol() === "cliente" ||
-          getAuthRol() === "bodega" ||
-          getAuthRol() === "venta" ? (
-            <NotAuthorized />
-          ) : (
-            <User />
-          )
-        }
-      ></Route>
+
+      <>
+        <Route
+          path="/home"
+          element={
+            <PrivateApp>
+              <HomePrivate />
+            </PrivateApp>
+          }
+        ></Route>
+        <Route
+          path="/product/:id"
+          element={
+            <PrivateApp>
+              <ProductsClient />
+            </PrivateApp>
+          }
+        ></Route>
+        <Route
+          path="/shopping/cart"
+          element={
+            <PrivateApp>
+              {" "}
+              <ShopingCart />
+            </PrivateApp>
+          }
+        ></Route>
+        <Route
+          path="/categorie"
+          element={
+            getAuthRol() === "cliente" || getAuthRol() === "bodega" ? (
+              <PrivateApp>
+                <NotAuthorized />
+              </PrivateApp>
+            ) : (
+              <PrivateApp>
+                <Categorie />
+              </PrivateApp>
+            )
+          }
+        ></Route>
+        <Route
+          path="/products"
+          element={
+            getAuthRol() === "cliente" || getAuthRol() === "bodega" ? (
+              <PrivateApp>
+                <NotAuthorized />
+              </PrivateApp>
+            ) : (
+              <PrivateApp>
+                {" "}
+                <Products />
+              </PrivateApp>
+            )
+          }
+        ></Route>
+        <Route
+          path="/details"
+          element={
+            getAuthRol() === "cliente" || getAuthRol() === "venta" ? (
+              <PrivateApp>
+                <NotAuthorized />
+              </PrivateApp>
+            ) : (
+              <PrivateApp>
+                {" "}
+                <DetailsProducts />
+              </PrivateApp>
+            )
+          }
+        ></Route>
+        <Route
+          path="/user"
+          element={
+            getAuthRol() === "cliente" ||
+            getAuthRol() === "bodega" ||
+            getAuthRol() === "venta" ? (
+              <PrivateApp>
+                <NotAuthorized />
+              </PrivateApp>
+            ) : (
+              <PrivateApp>
+                {" "}
+                <User />
+              </PrivateApp>
+            )
+          }
+        ></Route>
+      </>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

@@ -21,3 +21,8 @@ export const getAuthUser = () => {
 export const getAuthRol = () => {
   return localStorage.getItem("rol");
 };
+
+
+// export const authenticated = () => {
+
+// }

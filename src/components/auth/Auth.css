@@ -1,0 +1,104 @@
+@keyframes float {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    transform: translatey(-20px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+}
+
+.avatar {
+  width: 50%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+  top: 25vh;
+  left: 35%;
+  padding: 5px;
+}
+
+.avatar-1 {
+  width: 40%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+  top: 45vh;
+  left: 22%;
+  padding: 5px;
+  display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.avatar-2 {
+  width: 15%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+  top: 45vh;
+  left: 56%;
+}
+
+.slick-list {
+  height: 100vh !important;
+}
+
+.slick-track {
+  height: 100vh !important;
+}
+
+.avatar-4 {
+  width: 23%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+  top: 12vh;
+  left: 30%;
+}
+
+.avatar-5 {
+  width: 34%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+  top: 55vh;
+  left: 12%;
+}
+
+.avatar-6 {
+  width: 15%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+  top: 22vh;
+  left: 23%;
+}
+
+.avatar-7 {
+  width: 56%;
+  overflow: hidden;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  position: relative;
+  top: 33vh;
+  left: 56%;
+}
