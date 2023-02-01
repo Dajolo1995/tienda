@@ -14,9 +14,11 @@
     "antd": "^5.1.6",
     "axios": "^1.2.6",
     "dotenv": "^16.0.3",
+    "i18next": "^22.4.9",
     "react": "^18.2.0",
     "react-countup": "^6.4.1",
     "react-dom": "^18.2.0",
+    "react-i18next": "^12.1.4",
     "react-router-dom": "^6.8.0",
     "sweetalert2": "^11.7.1"
   },

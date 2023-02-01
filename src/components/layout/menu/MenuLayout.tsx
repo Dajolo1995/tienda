@@ -7,11 +7,13 @@ import {
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import { getAuthRol } from "../../../utils/auth";
+import { useTranslation } from "react-i18next";
 
 // #1677FF
 
 const MenuLayout = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Menu style={{ borderRight: 0, background: "#000" }}>
@@ -36,7 +38,7 @@ const MenuLayout = () => {
                 key="2"
                 icon={<GroupOutlined />}
               >
-                categoria
+                {t("Category")}
               </Menu.Item>
               <Menu.Item
                 className={
@@ -46,7 +48,7 @@ const MenuLayout = () => {
                 key="3"
                 icon={<HomeOutlined />}
               >
-                Productos
+                {t("Products")}
               </Menu.Item>
             </>
           )}
@@ -62,7 +64,7 @@ const MenuLayout = () => {
                   key="3"
                   icon={<UserOutlined />}
                 >
-                  Usuarios
+                  {t("User")}
                 </Menu.Item>
               )}
 
@@ -74,7 +76,7 @@ const MenuLayout = () => {
                 key="3"
                 icon={<ShoppingOutlined />}
               >
-                Detalle del producto
+                {t("productDetail")}
               </Menu.Item>
             </>
           )}

@@ -1,10 +1,12 @@
-import { Row, Col, Typography, Button, Badge } from "antd";
+import { Row, Col, Button, Badge, Dropdown, Space } from "antd";
 import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { getShoppingCart } from "../../utils/shoppingCart";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuthUser } from "../../utils/auth";
+import { getAuthUser, authIdiom } from "../../utils/auth";
+import type { MenuProps } from "antd";
+import { removeLocalStorage } from "../../utils/auth";
+import { useTranslation } from "react-i18next";
 
 const ButtonName = styled(Button)`
   width: 95%;
@@ -22,17 +24,51 @@ const ButtonName = styled(Button)`
 `;
 
 const Head = () => {
+  const { t } = useTranslation();
   const shoppingCart = getShoppingCart();
 
   const navigate = useNavigate();
+
+  const exit = () => {
+    removeLocalStorage();
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+  };
+
+  const changeIdiom = (value) => {
+    authIdiom(value);
+    location.reload();
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: <a onClick={() => changeIdiom("en")}>En</a>,
+    },
+    {
+      key: "2",
+      label: <a onClick={() => changeIdiom("es")}>Es</a>,
+    },
+    {
+      key: "3",
+      label: <a onClick={exit}>{t("exit")}</a>,
+    },
+  ];
 
   return (
     <Row>
       <Col span={16}></Col>
       <Col span={6}>
-        <ButtonName size="small" type="text">
-        <UserOutlined /> {getAuthUser()}
-        </ButtonName>
+        <Dropdown menu={{ items }}>
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              {getAuthUser()}
+              <UserOutlined />
+            </Space>
+          </a>
+        </Dropdown>
       </Col>
 
       <Col span={2}>

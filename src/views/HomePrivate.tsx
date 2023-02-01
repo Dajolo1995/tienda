@@ -69,12 +69,6 @@ const HomePrivate = () => {
             }}
           />
         </Col>
-        <Col span={12}>
-          <Select size="small" style={{ width: "95%" }}>
-            <Option value="si">Si</Option>
-            <Option value="no">No</Option>
-          </Select>
-        </Col>
       </Row>
       <br />
       <Row>

@@ -22,6 +22,13 @@ export const getAuthRol = () => {
   return localStorage.getItem("rol");
 };
 
+export const getAuthIdiom = () => {
+  return localStorage.getItem("idiom");
+};
+
+export const removeLocalStorage = () => {
+  localStorage.clear();
+};
 
 // export const authenticated = () => {
 
