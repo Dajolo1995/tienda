@@ -1,68 +1,33 @@
 import { useEffect, useState } from "react";
-import { Table, Typography, Image, Row, Col, Button, Divider } from "antd";
-import { getShoppingCart, deleteShoppingCart } from "../../utils/shoppingCart";
+import {
+  getShoppingCart,
+  deleteShoppingCart,
+  setShoppingCart,
+} from "../../utils/shoppingCart";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import ShoppingCartTable from "./ShoppingCartTable";
+import clienteAxios from "../../config/ClienteAxios";
 
 const ShoppingCart = () => {
   const navigate = useNavigate();
-
-  const columns = [
-    {
-      title: "Producto",
-      dataIndex: "product",
-      key: "product",
-      render: (text: an, record: any) => (
-        <Image
-          src={`http://45.33.14.152:5000/rest/get-resource/ckuik3joa42823vswq3mi50l9s/ckumy18z011933sfwq1cdxgko4/${record.name}/${text}/`}
-          style={{ width: "30px" }}
-        />
-      ),
-    },
-
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-
-    {
-      title: "Color",
-      dataIndex: "color",
-      key: "color",
-    },
-
-    {
-      title: "Size",
-      dataIndex: "size",
-      key: "size",
-    },
-
-    {
-      title: "Cantidad",
-      dataIndex: "amount",
-      key: "amount",
-    },
-    {
-      title: "Precio Unitario",
-      dataIndex: "price",
-      key: "price",
-    },
-    {
-      title: "Total",
-      dataIndex: "total",
-      key: "total",
-
-      render: (text: any, record: any) => (
-        <Typography.Text>
-          ${parseInt(record.price) * parseInt(record.amount)}
-        </Typography.Text>
-      ),
-    },
-  ];
-  const dataSource = getShoppingCart();
+  const [dataSource, setDataSource] = useState(getShoppingCart());
 
   const [stateTotal, setStateTotal] = useState(0);
+  const [menuContext, setMenuContext] = useState({
+    popup: {
+      record: [],
+      visible: false,
+      x: 0,
+      y: 0,
+    },
+  });
+  const [stateRecord, setStateRecord] = useState({});
+
+  const [stateOpenModal, setStateOpenModal] = useState({
+    vidible: false,
+    title: "",
+  });
 
   const totalFunction = () => {
     let total = 0;
@@ -78,18 +43,31 @@ const ShoppingCart = () => {
     totalFunction();
   }, []);
 
-  const buyProducts = () => {
+  const buyProducts = async () => {
     Swal.fire({
       title: "Estas seguro que desea comprar",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Si",
       denyButtonText: `No`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
+    }).then(async (result) => {
       if (result.isConfirmed) {
+        try {
+          const res = await clienteAxios.post("/shopee", dataSource);
+
+          console.log(res.data);
+
+          Swal.fire({
+            title: ":)",
+            text: res.data.msg,
+            icon: "success",
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
         deleteShoppingCart();
-        Swal.fire("Se le generara la factura al correo!", "", "success");
+
         navigate("/");
       } else if (result.isDenied) {
         Swal.fire("No se ha comprado nada", "", "info");
@@ -97,51 +75,78 @@ const ShoppingCart = () => {
     });
   };
 
+  const onRow = (record: any) => ({
+    onContextMenu: (event: any) => {
+      event.preventDefault();
+      if (!menuContext.popup.visible) {
+        document.addEventListener(`click`, function onClickOutside() {
+          setMenuContext({
+            popup: { record: [], visible: false, x: 0, y: 0 },
+          });
+          document.removeEventListener(`click`, onClickOutside);
+        });
+      }
+      setMenuContext({
+        popup: {
+          record,
+          visible: true,
+          x: event.clientX,
+          y: event.clientY,
+        },
+      });
+
+      setStateRecord(record);
+    },
+  });
+
+  const editShoppeCart = (record) => {
+    const edit = getShoppingCart();
+    console.log(edit);
+
+    let editFilter = edit.filter((f) => f.id !== stateRecord.id);
+
+    let variable = {
+      ...stateRecord,
+      amount: record.amount,
+    };
+
+    editFilter.push(variable);
+
+    setShoppingCart(editFilter);
+    setDataSource(editFilter);
+    setStateOpenModal({
+      vidible: false,
+      title: "",
+    });
+  };
+
+  const deleteShoppeCart = () => {
+    const edit = getShoppingCart();
+
+    let editFilter = edit.filter((f) => f.id !== stateRecord.id);
+
+    setShoppingCart(editFilter);
+    setDataSource(editFilter);
+    if (edit.length === 1) {
+      navigate("/");
+      deleteShoppingCart();
+    }
+  };
+
   return (
     <div style={{ padding: "10px" }}>
-      <Table
-        pagination={false}
-        size="small"
+      <ShoppingCartTable
+        buyProducts={buyProducts}
         dataSource={dataSource}
-        columns={columns}
+        stateTotal={stateTotal}
+        menuContext={menuContext}
+        stateRecord={stateRecord}
+        onRow={onRow}
+        editShoppeCart={editShoppeCart}
+        setStateOpenModal={setStateOpenModal}
+        stateOpenModal={stateOpenModal}
+        deleteShoppeCart={deleteShoppeCart}
       />
-
-      <br />
-      <Row gutter={[8, 8]}>
-        <Col span={18}>
-          <Typography.Text>Total:</Typography.Text>
-        </Col>
-        <Col span={6}>
-          <Button
-            onClick={buyProducts}
-            size="small"
-            style={{ width: "100%", color: "#fff", background: "#180222" }}
-          >
-            ${stateTotal}
-          </Button>
-        </Col>
-      </Row>
-
-      <Divider />
-
-
-      <Row gutter={[8, 8]}>
-        <Col span={12}>
-          <Button danger size="small" style={{ width: "95%" }} type="primary">
-            Cancelar
-          </Button>
-        </Col>
-        <Col span={12}>
-          <Button
-            onClick={buyProducts}
-            size="small"
-            style={{ width: "95%" }}
-            type="primary"
-          >
-            Pagar
-          </Button>
-        </Col>
-      </Row>
     </div>
   );
 };

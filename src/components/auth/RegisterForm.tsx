@@ -24,7 +24,6 @@ const RegisterForm = ({ record, cancel }) => {
     try {
       if (validations === false) {
         if (value.password === value.recordPassword) {
-          console.log(value);
           let variable = {
             ...value,
             rol: "cliente",
@@ -38,7 +37,6 @@ const RegisterForm = ({ record, cancel }) => {
             icon: "success",
           });
           cancel();
-          console.log(res);
         } else {
           Swal.fire({
             title: "Ooops!!",

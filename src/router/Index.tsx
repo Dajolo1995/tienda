@@ -17,7 +17,20 @@ import { getAuthRol } from "../utils/auth";
 const Index = () => {
   return (
     <Routes>
-      <Route path="/" element={<Auth />}></Route>
+      <Route
+        path="/"
+        element={
+          <>
+            {getAuthRol() === null || getAuthRol() === undefined ? (
+              <Auth />
+            ) : (
+              <PrivateApp>
+                <HomePrivate />
+              </PrivateApp>
+            )}
+          </>
+        }
+      ></Route>
 
       <>
         <Route

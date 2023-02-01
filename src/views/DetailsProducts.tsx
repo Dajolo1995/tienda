@@ -99,7 +99,7 @@ const DetailsProducts = () => {
 
   const getProducts = async () => {
     try {
-      const res = await clienteAxios.get("/product");
+      const res = await clienteAxios.get("/getProductActive");
 
       setDataProducts(res.data.products);
       return res.data.products;
@@ -113,7 +113,7 @@ const DetailsProducts = () => {
       const res = await clienteAxios.get("/details");
 
       setDataSource(res.data.products);
-      console.log(res.data.products);
+
       return res.data;
     } catch (error) {
       console.log(error);

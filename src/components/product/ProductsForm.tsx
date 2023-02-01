@@ -18,7 +18,6 @@ import { getTokenBack } from "../../utils/TokenTools";
 import { getAuthUser } from "../../utils/auth";
 import clienteAxios from "../../config/ClienteAxios";
 
-
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -77,25 +76,29 @@ const ProductsForm = ({ data, close, record }) => {
           image: images[0],
         };
 
-        console.log(variable);
-
         const res = await clienteAxios.post("/product", variable);
+      } else {
+        let variable = {
+          ...value,
+          userId: getAuthUser(),
+          image: images[0],
+        };
 
-        close();
+        const res = await clienteAxios.put(`product/${record._id}`, variable);
       }
+
+      close();
     } catch (error) {
       console.log(error);
     }
-
-    console.log(value);
   };
 
   const [dataSource, setDataSource] = useState([] as any);
   const getCategory = async () => {
     try {
-      const res = await clienteAxios.get("/category");
+      const res = await clienteAxios.get("/categoryActive");
 
-      setDataSource(res.data.categoria);
+      setDataSource(res.data);
       return res.data.categoria;
     } catch (error) {
       console.log(error);
@@ -105,8 +108,6 @@ const ProductsForm = ({ data, close, record }) => {
   useEffect(() => {
     getCategory();
   }, []);
-
-  console.log(dataSource);
 
   return (
     <Form

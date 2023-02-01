@@ -12,12 +12,14 @@ const HomePrivate = () => {
   let navigate = useNavigate();
 
   const [dataSource, setDataSource] = useState([] as any);
+  const [products, setProducts] = useState([] as any);
+  const [stateInput, setStateInput] = useState("");
 
   const getProducts = async () => {
     try {
-      const res = await clienteAxios.get("/product");
+      const res = await clienteAxios.get("/getProductActive");
 
-      setDataSource(res.data.products);
+      setProducts(res.data.products);
 
       return res.data.products;
     } catch (error) {
@@ -29,6 +31,31 @@ const HomePrivate = () => {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    setDataSource(products);
+  }, [products]);
+
+  useEffect(() => {
+    onSearch(stateInput);
+  }, [stateInput]);
+
+  const onSearch = (value) => {
+    let filters;
+
+    let copia = [...products];
+    if (value.lenght === 0) {
+      filters = copia;
+    } else {
+      filters = copia.filter(
+        (u) =>
+          u.id === value ||
+          u.idCategory.toLowerCase().includes(value.toLowerCase()) ||
+          u.name.toLowerCase().includes(value.toLowerCase())
+      );
+    }
+    setDataSource(filters);
+  };
+
   return (
     <LayoutPrivate>
       <Row>
@@ -37,6 +64,9 @@ const HomePrivate = () => {
             suffix={<SearchOutlined />}
             size="small"
             style={{ width: "95%" }}
+            onChange={(e) => {
+              setStateInput(e.target.value);
+            }}
           />
         </Col>
         <Col span={12}>

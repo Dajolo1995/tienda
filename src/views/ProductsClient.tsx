@@ -25,7 +25,7 @@ const ProductsClient = () => {
   const getDataClient = async () => {
     try {
       const res = await clienteAxios.get(`/product/${id.id}`);
-      console.log(res.data);
+
       setDataProducts(res.data.products);
     } catch (error) {
       console.log(error);
@@ -33,8 +33,6 @@ const ProductsClient = () => {
   };
 
   const detailsProduct = async () => {
-    console.log("hola");
-
     try {
       let variable = {
         idProducts: stateDataProducts.name,
@@ -58,8 +56,6 @@ const ProductsClient = () => {
       detailsProduct();
     }
   }, [stateDataProducts]);
-
-  console.log(dataSource);
 
   const [stateColors, setStateColors] = useState(`${dataSource[0]?.color}`);
   const [stateSize, setStateSize] = useState([] as any);
@@ -115,13 +111,20 @@ const ProductsClient = () => {
   };
 
   const shoppingCart = () => {
+    const filterId = dataSource.filter(
+      (f) => f.coloress === stateColors && f.size === stateDetailSale.size
+    )[0];
+
     let variable = {
+      idProduct: id.id,
       name: stateDataProducts.name,
-      amount: `${stateDetailSale.amount}`,
+      amount: parseInt(stateDetailSale.amount),
       size: stateDetailSale.size,
-      price: stateDataProducts.price,
+      price: parseInt(stateDataProducts.price),
       product: stateDataProducts.image,
       color: stateColors,
+      _id: filterId._id,
+      id: `${Math.random()}`,
     };
 
     const dataStorage = getShoppingCart() ?? [];

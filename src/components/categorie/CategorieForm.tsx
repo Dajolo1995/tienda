@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import {
   Form,
   Row,
@@ -7,7 +6,7 @@ import {
   Typography,
   Input,
   Select,
-  Divider,
+
 } from "antd";
 import { getAuthUser } from "../../utils/auth";
 import clienteAxios from "../../config/ClienteAxios";
@@ -15,10 +14,6 @@ import clienteAxios from "../../config/ClienteAxios";
 const { Option } = Select;
 
 const CategorieForm = ({ data, close, record }) => {
-  const [form] = Form.useForm();
-
-  console.log(record);
-
   const onFinishForm = async (value) => {
     try {
       if (record.name === null || record.name === undefined) {

@@ -6,9 +6,7 @@ import {
   Typography,
   Input,
   Select,
-  Divider,
   InputNumber,
-  message,
   Upload,
 } from "antd";
 import clienteAxios from "../../config/ClienteAxios";
@@ -38,20 +36,22 @@ function ProductClientForm({ data, close, record, productsData }) {
         let variable = {
           ...value,
           userId: getAuthUser(),
-
           color: `${Math.random()}`,
         };
-
-        console.log(variable);
         const res = await clienteAxios.post("/details", variable);
+      } else {
+        let variable = {
+          ...value,
+          userId: getAuthUser(),
+          color: `${Math.random()}`,
+        };
+        const res = await clienteAxios.put(`/detail/${record._id}`, variable);
 
-        // close();
+        close();
       }
     } catch (error) {
       console.log(error);
     }
-
-    console.log(value);
   };
 
   return (
@@ -137,8 +137,8 @@ function ProductClientForm({ data, close, record, productsData }) {
             ]}
           >
             <Select size="small" placeholder="Ingrese el estado">
-              <Option value={true}>Activo</Option>
-              <Option value={false}>Inactivo</Option>
+              <Option value={"true"}>Activo</Option>
+              <Option value={"false"}>Inactivo</Option>
             </Select>
           </Form.Item>
         </Col>
