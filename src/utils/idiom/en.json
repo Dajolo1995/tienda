@@ -3,5 +3,11 @@
   "exit": "Exit",
   "Products": "Products",
   "User": "User",
-  "productDetail": "Product detail"
+  "productDetail": "Product detail",
+  "search": "Search",
+  "nameOfCategory": "Name of category",
+  "state":"State",
+  "active":"Active",
+  "inactive":"Inactive",
+  "createCategory":"New category"
 }

@@ -1,15 +1,15 @@
 import LayoutPrivate from "../components/layout/LayoutPrivate";
-import { Card, Row, Col, Input, Select } from "antd";
+import { Card, Row, Col, Input } from "antd";
 import Content from "../components/homePrivate/Content";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import clienteAxios from "../config/ClienteAxios";
 import { SearchOutlined } from "@ant-design/icons";
-
-const { Option } = Select;
+import { useTranslation } from "react-i18next";
 
 const HomePrivate = () => {
   let navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [dataSource, setDataSource] = useState([] as any);
   const [products, setProducts] = useState([] as any);
@@ -64,6 +64,7 @@ const HomePrivate = () => {
             suffix={<SearchOutlined />}
             size="small"
             style={{ width: "95%" }}
+            placeholder={t("search")}
             onChange={(e) => {
               setStateInput(e.target.value);
             }}

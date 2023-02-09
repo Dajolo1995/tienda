@@ -3,5 +3,10 @@
   "exit": "Salir",
   "Products": "Productos",
   "User": "Usuarios",
-  "productDetail": "Detalle del producto"
+  "productDetail": "Detalle del producto",
+  "search": "Buscar",
+  "nameOfCategory": "Nombre de la categoria",
+  "state":"Estado",
+  "active":"Activo",
+  "inactive":"Inactivo"
 }

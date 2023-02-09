@@ -32,8 +32,8 @@ const Head = () => {
   const exit = () => {
     removeLocalStorage();
 
-    setTimeout(() => {
-      navigate("/");
+    setTimeout(async () => {
+     await navigate("/");
     }, 2000);
   };
 

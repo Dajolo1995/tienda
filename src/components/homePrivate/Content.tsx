@@ -29,7 +29,7 @@ const Content = ({ dataCard }) => {
 
       <Col span={24}>
         <Typography.Text style={{ fontSize: "1rem", fontWeight: "500" }}>
-          $ {dataCard.price}
+          $ {new Intl.NumberFormat().format(dataCard.price)}
         </Typography.Text>
       </Col>
     </Row>

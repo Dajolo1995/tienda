@@ -11,7 +11,7 @@ const contentStyle: React.CSSProperties = {
   background: "#e6f4ff",
 };
 
-const AuthContent =() => {
+const AuthContent = () => {
   return (
     <Carousel autoplay style={{ height: "100vh" }}>
       <div>
@@ -22,6 +22,6 @@ const AuthContent =() => {
       {/* </div> */}
     </Carousel>
   );
-}
+};
 
 export default AuthContent;

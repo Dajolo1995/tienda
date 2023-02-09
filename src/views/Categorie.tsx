@@ -6,25 +6,28 @@ import PopUp from "../components/table/PopUp";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import clienteAxios from "../config/ClienteAxios";
 import { SearchOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 const Categorie = () => {
+  const { t } = useTranslation();
+
   const columns = [
     {
-      title: "Nombre de la categoria",
+      title: `${t("nameOfCategory")}`,
       dataIndex: "name",
       key: "name",
     },
 
     {
-      title: "Estado",
+      title: `${t("state")}`,
       dataIndex: "state",
       key: "state",
       render: (text: any) => (
         <>
           {text === true ? (
-            <Badge count="active" color="#52c41a" />
+            <Badge count={t("active")} color="#52c41a" />
           ) : (
-            <Badge count="Inactivo" color="#FF4D4F" />
+            <Badge count={t("Inactive")} color="#FF4D4F" />
           )}
         </>
       ),
@@ -64,7 +67,7 @@ const Categorie = () => {
     setStateRecord({});
     setStateOpenModal({
       vidible: true,
-      title: "Crear Categoria",
+      title: `${t("createCategory")}`,
     });
   };
 
@@ -145,7 +148,7 @@ const Categorie = () => {
         </Col>
         <Col span={8} style={{ display: "flex", justifyContent: "start" }}>
           <Button size="small" onClick={openModal} style={{ width: "40%" }}>
-            Crear categoria
+            {t("createCategory")}
           </Button>
         </Col>
 
